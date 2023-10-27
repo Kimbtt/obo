@@ -33,7 +33,7 @@ import java.util.List;
 
 import static com.example.demo.config.Constant.MAX_AGE_COOKIE;
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
@@ -102,7 +102,7 @@ public class UserController {
      * @return
      * @throws Exception
      */
-    @GetMapping("api/delete/{id}")
+    @DeleteMapping("api/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id ) throws Exception{
         try{
             // Xóa user theo id
