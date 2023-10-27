@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/order")
 public class OrderController {
+
     @Autowired
     OrderService orderService;
 

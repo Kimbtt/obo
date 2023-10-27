@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aspectj.weaver.ast.Or;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,8 @@ import java.util.List;
         name = "json",
         typeClass = JsonStringType.class
 )
-public class Product {
+public class Product implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
     private String id;
@@ -38,9 +41,9 @@ public class Product {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "brand_id")
+//    private Brand brand;
 
     @Column(name = "price")
     private long price;
@@ -69,6 +72,7 @@ public class Product {
     @Type(type = "json")
     @Column(name = "onfeet_images", columnDefinition = "json")
     private ArrayList<String> onfeetImages;
+
 
     @PreRemove
     private void removeCategories() {

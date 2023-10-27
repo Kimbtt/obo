@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,8 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -37,9 +40,10 @@ public class Order {
     @Column(name = "receiver_address")
     private String receiverAddress;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "product_id")
-    private Product product;
+////    @JsonIgnore
+    private List<Product> product;
 
     @Column(name = "size")
     private int size;
