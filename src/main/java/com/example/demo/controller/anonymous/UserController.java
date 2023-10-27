@@ -65,6 +65,12 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.toUserDto(result));
     }
 
+    /**
+     * Đăng nhập
+     * @param LoginReq req
+     * @param HttpServletResponse response
+     * @return
+     */
     @PostMapping("/api/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginReq req, HttpServletResponse response) {
         // Authenticate
@@ -90,11 +96,29 @@ public class UserController {
             return new ResponseEntity<>("failed",HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * lấy danh sách user
+     * @return
+     */
     @GetMapping("api/list")
-    public ResponseEntity<?> getAccount(Model model) {
+    public ResponseEntity<?> getAccount() {
         List<User> users = userService.getListUser();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+    @GetMapping("api/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id){
+        try {
+
+            return ResponseEntity.ok(userService.getUserById(id));
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Looix");
+        }
+
+    }
+
 
     /**
      * Xóa 1 user
@@ -112,4 +136,5 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi xóa user có id: " + id);
         }
     }
+
 }

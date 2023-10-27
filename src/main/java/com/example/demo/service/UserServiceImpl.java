@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.User;
-import com.example.demo.model.dto.UserDto;
-import com.example.demo.model.mapper.UserMapper;
 import com.example.demo.model.request.CreateUserReq;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +48,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
-        return null;
+    public Optional<User> getUserById(long id) {
+        return userRepository.findById(id);
     }
 
     @Override
