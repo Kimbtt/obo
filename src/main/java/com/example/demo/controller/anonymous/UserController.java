@@ -92,7 +92,7 @@ public class UserController {
             // Add token to cookie to login
             Cookie cookie = new Cookie("JWT_TOKEN", token);
             cookie.setMaxAge(MAX_AGE_COOKIE); // set ngày hết hạn(tính theo s)
-            cookie.setPath("http://google.com"); // Sau khi đăng nhập sẽ trỏ tới
+            cookie.setPath("/"); // cookei được gửi đến những link
             response.addCookie(cookie);
 
             return ResponseEntity.ok(UserMapper.toUserDto(((CustomUserDetails) authentication.getPrincipal()).getUser()));

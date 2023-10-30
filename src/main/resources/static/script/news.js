@@ -2,6 +2,7 @@ $(window).resize(changeUi);
 
 $(function () {
   changeUi();
+  pagination(6,1,"/tin-tuc?page=");
 });
 
 function changeUi() {

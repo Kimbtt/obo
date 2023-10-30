@@ -4,7 +4,7 @@ main {
 }
 
 .search-form .btn-primary {
-  display: none;
+  display: block;
 }
 
 .search-input-wrapper {

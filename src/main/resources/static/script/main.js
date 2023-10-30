@@ -162,7 +162,7 @@ $(document).on('click', function (e) {
 
     if (isValid == true) {
         req = {
-            fullName: fullNameValue,
+            name: fullNameValue,
             email: emailValue,
             password: passwordValue,
             phone: phoneValue
@@ -175,7 +175,7 @@ $(document).on('click', function (e) {
             contentType: "application/json; charset=utf-8",
             success: function(data) {
                 toastr.success("Đăng ký thành công");
-                signedValidate(true, data.fullName);
+                signedValidate(true, data.name);
                 $('.modal').modal('hide');
             },
             error: function(data) {
