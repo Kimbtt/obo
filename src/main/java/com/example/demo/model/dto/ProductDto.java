@@ -1,12 +1,13 @@
 package com.example.demo.model.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.ArrayList;
 
-
 @Data
 public class ProductDto {
+
+    private Long promotionPrice;
     private String id;
 
     private String name;
@@ -17,5 +18,13 @@ public class ProductDto {
 
     private int totalSold;
 
-    private ArrayList<String> productImages;
+    private int brandId;
+
+    private String image;
+
+    private String description;
+
+    private Boolean isAvailable;
+
+    private ArrayList<String> onfeetImages;
 }

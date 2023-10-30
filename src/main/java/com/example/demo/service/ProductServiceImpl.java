@@ -7,6 +7,8 @@ import com.example.demo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -30,5 +32,20 @@ public class ProductServiceImpl implements ProductService {
             e.printStackTrace(); // in ra looix
             return Optional.empty();
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public List<ProductDto> getListNewProduct() {
+        List<Product> newProducts = productRepository.findAllByOrderByCreatedAtDesc();
+        List<ProductDto> result= new ArrayList<>();
+
+        for (Product product:newProducts) {
+            result.add(ProductMapper.toProductDto(product));
+        }
+        return result;
     }
 }

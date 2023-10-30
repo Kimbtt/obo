@@ -8,6 +8,10 @@ import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,36 +31,33 @@ import java.util.List;
         typeClass = JsonStringType.class
 )
 public class Product implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private String id;
-
-    @Column(name = "name", nullable = false, length = 300)
+    @Field(termVector = TermVector.YES,analyze = Analyze.YES,store = Store.NO)
+    @Column(name ="name",nullable = false,length = 255)
     private String name;
-
-    @Column(name = "slug", nullable = false)
+    @Column(name = "slug",nullable = false,length = 300)
     private String slug;
-
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(name = "brand_id")
+    private int brandId;
+    @Column(name = "description",columnDefinition = "TEXT")
     private String description;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "brand_id")
-//    private Brand brand;
-
-    @Column(name = "price")
-    private long price;
-
-    @Column(name = "total_sold")
-    private int totalSold;
-
+    @Column(name = "is_available")
+    private Boolean isAvailable;
     @Column(name = "created_at")
     private Timestamp createdAt;
-
-    @Column(name = "is_available", columnDefinition = "TINYINT(1)")
-    private boolean isAvailable;
-
+    @Column(name = "price")
+    private long price;
+    @Type(type = "json")
+    @Column(name = "onfeet_images",columnDefinition = "json")
+    private ArrayList<String> onfeetImages;
+    @Type(type = "json")
+    @Column(name = "product_images",columnDefinition = "json")
+    private ArrayList<String> productImages;
+    @Column(name = "total_sold")
+    private int totalSold;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "product_category",
@@ -65,17 +66,4 @@ public class Product implements Serializable {
     )
     private List<Category> categories;
 
-    @Type(type = "json")
-    @Column(name = "product_images", columnDefinition = "json")
-    private ArrayList<String> productImages;
-
-    @Type(type = "json")
-    @Column(name = "onfeet_images", columnDefinition = "json")
-    private ArrayList<String> onfeetImages;
-
-
-    @PreRemove
-    private void removeCategories() {
-        this.categories.clear();
-    }
 }

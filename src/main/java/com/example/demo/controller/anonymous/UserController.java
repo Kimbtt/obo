@@ -2,6 +2,7 @@ package com.example.demo.controller.anonymous;
 
 
 import com.example.demo.entity.User;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.mapper.UserMapper;
 import com.example.demo.model.request.AuthenticateReq;
@@ -49,20 +50,23 @@ public class UserController {
 
     @PostMapping("/api/register")
     public ResponseEntity<?> register(@Valid @RequestBody CreateUserReq req, HttpServletResponse response) throws Exception{
-        // Create user
-        User result = userService.createUser(req);
+        try {
+            // Create user
+            User result = userService.createUser(req);
+            // Gen token
+            UserDetails principal = new CustomUserDetails(result);
+            String token = jwtTokenUtil.generateToken(principal);
 
-        // Gen token
-        UserDetails principal = new CustomUserDetails(result);
-        String token = jwtTokenUtil.generateToken(principal);
+            // Add token to cookie to login
+            Cookie cookie = new Cookie("JWT_TOKEN",token);
+            cookie.setMaxAge(MAX_AGE_COOKIE);
+            cookie.setPath("/");
+            response.addCookie(cookie);
 
-        // Add token to cookie to login
-        Cookie cookie = new Cookie("JWT_TOKEN",token);
-        cookie.setMaxAge(MAX_AGE_COOKIE);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-
-        return ResponseEntity.ok(UserMapper.toUserDto(result));
+            return ResponseEntity.ok(UserMapper.toUserDto(result));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Loi cmnr");
+        }
     }
 
     /**
@@ -87,8 +91,8 @@ public class UserController {
 
             // Add token to cookie to login
             Cookie cookie = new Cookie("JWT_TOKEN", token);
-            cookie.setMaxAge(MAX_AGE_COOKIE);
-            cookie.setPath("/");
+            cookie.setMaxAge(MAX_AGE_COOKIE); // set ngày hết hạn(tính theo s)
+            cookie.setPath("http://google.com"); // Sau khi đăng nhập sẽ trỏ tới
             response.addCookie(cookie);
 
             return ResponseEntity.ok(UserMapper.toUserDto(((CustomUserDetails) authentication.getPrincipal()).getUser()));
@@ -110,9 +114,7 @@ public class UserController {
     @GetMapping("api/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id){
         try {
-
             return ResponseEntity.ok(userService.getUserById(id));
-
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Looix");
         }
@@ -136,5 +138,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi xóa user có id: " + id);
         }
     }
+
+
 
 }

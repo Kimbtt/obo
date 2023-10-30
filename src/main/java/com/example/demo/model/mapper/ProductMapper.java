@@ -5,14 +5,17 @@ import com.example.demo.model.dto.ProductDto;
 
 public class ProductMapper {
     public static ProductDto toProductDto (Product product) {
-        ProductDto rs = new ProductDto();
-        rs.setId(product.getId());
-        rs.setName(product.getName());
-        rs.setSlug(product.getSlug());
-        rs.setPrice(product.getPrice());
-        rs.setTotalSold(product.getTotalSold());
-        rs.setProductImages(product.getProductImages());
-        rs.setTotalSold(product.getTotalSold());
-        return rs;
+        ProductDto tmp = new ProductDto();
+        tmp.setId(product.getId());
+        tmp.setName(product.getName());
+        tmp.setSlug(product.getSlug());
+        tmp.setPrice(product.getPrice());
+        tmp.setTotalSold(product.getTotalSold());
+        tmp.setImage(product.getProductImages().get(0));
+        tmp.setIsAvailable(product.getIsAvailable());
+        tmp.setDescription(product.getDescription());
+        tmp.setOnfeetImages(product.getOnfeetImages());
+        tmp.setBrandId(product.getBrandId());
+        return tmp;
     }
 }

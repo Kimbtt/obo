@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/order")
@@ -35,10 +36,16 @@ public class OrderController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> getOrderById(@PathVariable Long id) {
+        try {
+            Optional<Order> rs = orderService.getOrderById(id);
+            if (rs.get() != null){
+                return ResponseEntity.ok(rs.get());
+            }
+            return ResponseEntity.badRequest().body("K cos trong db");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     /**

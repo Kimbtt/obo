@@ -15,9 +15,9 @@ public class CreateUserReq {
     @NotEmpty(message = "Full name is required")
     @NotNull(message = "Full name is required")
     private String name;
+
     @NotEmpty(message = "Email is required")
     @NotNull(message = "Full name is required")
-
     @Email(message = "Please provide a valid email")
     private String email;
 
