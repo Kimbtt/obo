@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -27,6 +28,7 @@ public class Promotion {
     private long discountValue;
 
     @Column(name = "maximum_discount_value")
+    @Comment("Giá trị của km")
     private long maximumDiscountValue;
 
     @Column(name = "discount_type")

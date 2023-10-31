@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Product;
-import com.example.demo.entity.ProductSize;
 import com.example.demo.model.dto.ProductDto;
 import com.example.demo.model.mapper.ProductMapper;
 import com.example.demo.repository.ProductRepository;
@@ -54,27 +53,14 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
-    /** Đang làm zở
+    /**
+     * Đang làm zở
      *
      * @param id
      * @return
      */
-    @Override
-    public int getQuantityByProductId(String id) {
-//        try {
-//            ProductSize productSize = productSizeRepository.findByProductId(id);
-//            if (productSize != null) {
-//                return productSize.getQuantity();
-//            } else {
-//                throw new Exception("Không lấy được số lượng sản phẩm.");
-//            }
-//        } catch (Exception e) {
-//            throw new Exception("Lỗi khi lấy số lượng sản phẩm: " + e.getMessage());
-//        }
-
-
-        return productSizeRepository.findByProductId(id).getQuantity();
-
+    public boolean isExistProductSize(String id) {
+        return productSizeRepository.existsByProductId(id);
     }
 
 

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
@@ -40,10 +41,9 @@ public class Order {
     @Column(name = "receiver_address")
     private String receiverAddress;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "product_id")
-////    @JsonIgnore
-    private List<Product> product;
+    private Product product;
 
     @Column(name = "size")
     private int size;

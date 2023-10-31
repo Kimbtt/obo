@@ -83,12 +83,12 @@
 
                             <div class="ask-text left-content">
                                 <th:block th:if="${product.promotionPrice}">
-                                    <div class="ask-desc sub-content old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</div>
+                                    <div class="ask-desc sub-content old-price"><span class="text-price" th:text="${productProduct}"></span> &#x20AB;</div>
                                     <div class="ask-price main-content"><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</div>
                                 </th:block>
                                 <th:block th:unless="${product.promotionPrice}">
                                     <div class="ask-desc sub-content">Giá bán ưu đãi</div>
-                                    <div class="ask-price main-content"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</div>
+                                    <div class="ask-price main-content"><span class="text-price" th:text="${productProduct}"></span> &#x20AB;</div>
                                 </th:block>
                             </div>
                             <div class="buy-text right-content">

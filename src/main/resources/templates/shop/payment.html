@@ -73,25 +73,26 @@
                 </div>
                 <!-- Pricing Section-->
                 <div class="pricing childs">
-                    <h6 class="not-found-size" style="margin-top: 5px; color: #dc3545;"  th:styleappend="${notFoundSize} == true ? '' : 'display:none'">Size giày này đã hết. Vui lòng chọn size khác.</h6>
+<!--                    <h6 class="not-found-size" style="margin-top: 5px; color: #dc3545;"  th:styleappend="${notFoundSize} == true ? '' : 'display:none'">Size giày này đã hết. Vui lòng chọn size khác.</h6>-->
                     <!--                    <div class="size-btn" data-toggle="modal" data-target="#sizeChooseModal">-->
                     <!--                        <button class="btn btn-primary size trans-btn"><span class="size-text">Size</span><span th:data-size="${size}" class="size-details">9US | 42.5VN | 26.2CM</span><i class="fas fa-chevron-down dropdown-arrow"></i></button>-->
                     <!--                    </div>-->
                     <div class="">
-                        <h2>Chọn size</h2>
-                        <select class="size-btn">
-                            <th:block th:each="size : ${availableSizes}">
-                                <option   th:text="${size}"></option>
+<!--                        <h2>Chọn size</h2>-->
+<!--                        <select class="size-btn">-->
+<!--                            <th:block th:each="size : ${availableSizes}">-->
+<!--                                <option   th:text="${size}"></option>-->
 
-                            </th:block>
+<!--                            </th:block>-->
 
-                        </select>
+<!--                        </select>-->
                         <label for="quantity"> Số lượng :</label>
                         <input type="number" id="quantity" value="1" default="1" name="quantity" min="1" max="5">
                     </div>
                     <div class="coupon price-include">
                         <div class="text">Giá sản phẩm</div>
-                        <input class="form-control text-price-input" id="in-price" type="text" th:value="${product.price}" readonly/>
+                        <input class="form-control text-price-input" id="in-price" type="text"
+                               th:value="${productPrice}" readonly/>
                     </div>
                     <div class="coupon price-include">
                         <div class="text">Khuyến mãi</div>
@@ -99,7 +100,8 @@
                     </div>
                     <div class="coupon price-include">
                         <div class="text">Tổng thanh toán</div>
-                        <input class="form-control text-price-input" id="in-total-price" type="text" th:value="${product.promotionPrice}" readonly/>
+                        <input class="form-control text-price-input" id="in-total-price" type="text" th:value="${productPrice}"
+                               readonly/>
                     </div>
                 </div>
                 <a th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
@@ -119,24 +121,20 @@
     <script th:src="@{/script/size-choose.js}"></script>
     <!--    <script th:src="@{/script/buy-page.js}"></script>-->
     <script>
-             let tmp =   [[${product.promotionPrice}]]
+             let price = [[${product.price}]];
+             let totalPrice = 0;
 
            $('#quantity').change(function(){
                let quantity=   parseInt($('#quantity').val(), 10);
-               console.log(quantity);
-               //console.log(typeof Number(quantity) ) ;
-              // console.log(typeof $('#in-total-price').val())
-               let rs  = quantity * tmp;
-
-            $('#in-total-price').val(rs );
+                totalPrice  = quantity * price;
+            $('#in-total-price').val(totalPrice.toLocaleString());
            });
-           console.log(quantity);
-           $('#btn-buy-now').click(function() {
-           let id = new String('[[${product_id}]]');
 
-            let price = [[${product.price}]];
+           $('#btn-buy-now').click(function() {
+           let id = new String('[[${product.id}]]');
+
             let promotionValue = 0;
-            let totalPrice = $('#in-total-price').val();
+            // let totalPrice = $('#in-total-price').val();
             let size = $('.size-btn ').val();
             let receiverName = $('#in-user-fullname').val();
             let receiverPhone = $('#in-user-phone').val();
@@ -177,7 +175,7 @@
                     receiver_address: receiverAddress,
 
                     product_price: price,
-                    total_price: price
+                    total_price: totalPrice,
                 }
                 var myJSON = JSON.stringify(req);
                 console.log(myJSON)
@@ -204,179 +202,179 @@
 </th:block>
 <script th:src="@{/script/except-home-page.js}"></script>
 
-<script th:inline="javascript">
-<!--        let price = [[${product.price}]];-->
+<!--<script th:inline="javascript">
+&lt;!&ndash;        let price = [[${product.price}]];&ndash;&gt;
 
-<!--        let promotionValue = 0;-->
-<!--        let totalPrice = price;-->
+&lt;!&ndash;        let promotionValue = 0;&ndash;&gt;
+&lt;!&ndash;        let totalPrice = price;&ndash;&gt;
 
-<!--        if ([[${product.couponCode}]] != null && [[${product.couponCode}]] != "") {-->
-<!--            totalPrice = [[${product.promotionPrice}]];-->
-<!--            promotionValue = price - totalPrice;-->
-<!--        }-->
-<!--        $('#in-total-price').val(totalPrice);-->
-<!--        $('#in-promotion-value').val(promotionValue);-->
+&lt;!&ndash;        if ([[${product.couponCode}]] != null && [[${product.couponCode}]] != "") {&ndash;&gt;
+&lt;!&ndash;            totalPrice = [[${product.promotionPrice}]];&ndash;&gt;
+&lt;!&ndash;            promotionValue = price - totalPrice;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+&lt;!&ndash;        $('#in-total-price').val(totalPrice);&ndash;&gt;
+&lt;!&ndash;        $('#in-promotion-value').val(promotionValue);&ndash;&gt;
 
-<!--        let couponCode = [[${product.couponCode}]];-->
+&lt;!&ndash;        let couponCode = [[${product.couponCode}]];&ndash;&gt;
 
-<!--        let sizeVn = [[${sizeVn}]];-->
+&lt;!&ndash;        let sizeVn = [[${sizeVn}]];&ndash;&gt;
 
-<!--        let sizeUs = [[${sizeUs}]];-->
+&lt;!&ndash;        let sizeUs = [[${sizeUs}]];&ndash;&gt;
 
-<!--        let sizeCm = [[${sizeCm}]];-->
+&lt;!&ndash;        let sizeCm = [[${sizeCm}]];&ndash;&gt;
 
-<!--        function render() {-->
-<!--          for (let i = 0; i < sizeVn.length; i++) {-->
-<!--            let sizeChoose = `-->
-<!--            <div class="item" data-size="${sizeUs[i]}US | ${sizeVn[i]}VN | ${sizeCm[i]}CM" data-id="${sizeVn[i]}">-->
-<!--                ${sizeVn[i]}-->
-<!--            </div>-->
-<!--            `;-->
+&lt;!&ndash;        function render() {&ndash;&gt;
+&lt;!&ndash;          for (let i = 0; i < sizeVn.length; i++) {&ndash;&gt;
+&lt;!&ndash;            let sizeChoose = `&ndash;&gt;
+&lt;!&ndash;            <div class="item" data-size="${sizeUs[i]}US | ${sizeVn[i]}VN | ${sizeCm[i]}CM" data-id="${sizeVn[i]}">&ndash;&gt;
+&lt;!&ndash;                ${sizeVn[i]}&ndash;&gt;
+&lt;!&ndash;            </div>&ndash;&gt;
+&lt;!&ndash;            `;&ndash;&gt;
 
-<!--            $('.size .select-filter').append(sizeChoose);-->
-<!--          };-->
-<!--        };-->
+&lt;!&ndash;            $('.size .select-filter').append(sizeChoose);&ndash;&gt;
+&lt;!&ndash;          };&ndash;&gt;
+&lt;!&ndash;        };&ndash;&gt;
 
-<!--        function sizeGuideRender() {-->
-<!--          let tr = '';-->
-<!--          for (let i = 0; i < sizeVn.length; i++) {-->
-<!--            tr += `-->
-<!--            <tr>-->
-<!--              <td>${sizeVn[i]}</td>-->
-<!--              <td>${sizeUs[i]}</td>-->
-<!--              <td>${sizeCm[i]}</td>-->
-<!--            </tr>-->
-<!--            `;-->
-<!--          }-->
-<!--          $('.side-guide-table tbody').html(tr);-->
-<!--        }-->
+&lt;!&ndash;        function sizeGuideRender() {&ndash;&gt;
+&lt;!&ndash;          let tr = '';&ndash;&gt;
+&lt;!&ndash;          for (let i = 0; i < sizeVn.length; i++) {&ndash;&gt;
+&lt;!&ndash;            tr += `&ndash;&gt;
+&lt;!&ndash;            <tr>&ndash;&gt;
+&lt;!&ndash;              <td>${sizeVn[i]}</td>&ndash;&gt;
+&lt;!&ndash;              <td>${sizeUs[i]}</td>&ndash;&gt;
+&lt;!&ndash;              <td>${sizeCm[i]}</td>&ndash;&gt;
+&lt;!&ndash;            </tr>&ndash;&gt;
+&lt;!&ndash;            `;&ndash;&gt;
+&lt;!&ndash;          }&ndash;&gt;
+&lt;!&ndash;          $('.side-guide-table tbody').html(tr);&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
 
-<!--        function activeSize() {-->
-<!--          let availableSizes = [[${availableSizes}]]-->
+&lt;!&ndash;        function activeSize() {&ndash;&gt;
+&lt;!&ndash;          let availableSizes = [[${availableSizes}]]&ndash;&gt;
 
-<!--          for (let i = 0; i < sizeVn.length; i++) {-->
-<!--            if (sizeVn[i] == [[${size}]]) {-->
-<!--              $('.size-details').text(sizeUs[i] + "US | " + sizeVn[i] + "VN | " + sizeCm[i] + "CM")-->
-<!--              break;-->
-<!--            }-->
-<!--          }-->
+&lt;!&ndash;          for (let i = 0; i < sizeVn.length; i++) {&ndash;&gt;
+&lt;!&ndash;            if (sizeVn[i] == [[${size}]]) {&ndash;&gt;
+&lt;!&ndash;              $('.size-details').text(sizeUs[i] + "US | " + sizeVn[i] + "VN | " + sizeCm[i] + "CM")&ndash;&gt;
+&lt;!&ndash;              break;&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;          }&ndash;&gt;
 
-<!--          $('.size .item').addClass('cross')-->
-<!--          if (![[${notFoundSize}]]) {-->
-<!--            $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose').removeClass('cross');-->
-<!--          }-->
+&lt;!&ndash;          $('.size .item').addClass('cross')&ndash;&gt;
+&lt;!&ndash;          if (![[${notFoundSize}]]) {&ndash;&gt;
+&lt;!&ndash;            $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose').removeClass('cross');&ndash;&gt;
+&lt;!&ndash;          }&ndash;&gt;
 
-<!--          for (let i = 0; i < availableSizes.length; i++) {-->
-<!--            $(`.item[data-id='${availableSizes[i]}']`).removeClass('cross');-->
-<!--          }-->
-<!--        }-->
+&lt;!&ndash;          for (let i = 0; i < availableSizes.length; i++) {&ndash;&gt;
+&lt;!&ndash;            $(`.item[data-id='${availableSizes[i]}']`).removeClass('cross');&ndash;&gt;
+&lt;!&ndash;          }&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
 
-<!--        $('#btn-apply-coupon').click(function() {-->
-<!--            let coupon = $('#in-coupon').val();-->
-<!--            if (coupon == "") {-->
-<!--                $('#in-coupon').val(couponCode);-->
-<!--                toastr.warning("Bạn chưa nhập mã khuyến mãi");-->
-<!--                return;-->
-<!--            }-->
-<!--            $.ajax({-->
-<!--			   	url: '/api/check-hidden-promotion?code='+coupon,-->
-<!--			   	type: 'GET',-->
-<!--			   	contentType: "application/json; charset=utf-8",-->
-<!--			   	success: function(data) {-->
-<!--                    couponCode = coupon;-->
-<!--                    let tmp = data.discountValue;-->
-<!--                    if (data.discountType == 1) {-->
-<!--                        tmp = price * data.discountValue / 100;-->
-<!--                    }-->
-<!--                    if (tmp < data.maximumDiscountValue) {-->
-<!--                        promotionValue = tmp;-->
-<!--                    } else {-->
-<!--                        promotionValue = data.maximumDiscountValue;-->
-<!--                    }-->
-<!--                    totalPrice = price - promotionValue;-->
-<!--                    $('#in-price').val(price);-->
-<!--                    $('#in-promotion-value').val(promotionValue);-->
-<!--                    $('#in-total-price').val(totalPrice);-->
-<!--                    formatMoney();-->
-<!--			   	},-->
-<!--			   	error: function(data) {-->
-<!--			   	    $('#in-coupon').val(couponCode);-->
-<!--			   		toastr.warning(data.responseJSON.message);-->
-<!--			   	},-->
-<!--			});-->
-<!--        })-->
+&lt;!&ndash;        $('#btn-apply-coupon').click(function() {&ndash;&gt;
+&lt;!&ndash;            let coupon = $('#in-coupon').val();&ndash;&gt;
+&lt;!&ndash;            if (coupon == "") {&ndash;&gt;
+&lt;!&ndash;                $('#in-coupon').val(couponCode);&ndash;&gt;
+&lt;!&ndash;                toastr.warning("Bạn chưa nhập mã khuyến mãi");&ndash;&gt;
+&lt;!&ndash;                return;&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;            $.ajax({&ndash;&gt;
+&lt;!&ndash;			   	url: '/api/check-hidden-promotion?code='+coupon,&ndash;&gt;
+&lt;!&ndash;			   	type: 'GET',&ndash;&gt;
+&lt;!&ndash;			   	contentType: "application/json; charset=utf-8",&ndash;&gt;
+&lt;!&ndash;			   	success: function(data) {&ndash;&gt;
+&lt;!&ndash;                    couponCode = coupon;&ndash;&gt;
+&lt;!&ndash;                    let tmp = data.discountValue;&ndash;&gt;
+&lt;!&ndash;                    if (data.discountType == 1) {&ndash;&gt;
+&lt;!&ndash;                        tmp = price * data.discountValue / 100;&ndash;&gt;
+&lt;!&ndash;                    }&ndash;&gt;
+&lt;!&ndash;                    if (tmp < data.maximumDiscountValue) {&ndash;&gt;
+&lt;!&ndash;                        promotionValue = tmp;&ndash;&gt;
+&lt;!&ndash;                    } else {&ndash;&gt;
+&lt;!&ndash;                        promotionValue = data.maximumDiscountValue;&ndash;&gt;
+&lt;!&ndash;                    }&ndash;&gt;
+&lt;!&ndash;                    totalPrice = price - promotionValue;&ndash;&gt;
+&lt;!&ndash;                    $('#in-price').val(price);&ndash;&gt;
+&lt;!&ndash;                    $('#in-promotion-value').val(promotionValue);&ndash;&gt;
+&lt;!&ndash;                    $('#in-total-price').val(totalPrice);&ndash;&gt;
+&lt;!&ndash;                    formatMoney();&ndash;&gt;
+&lt;!&ndash;			   	},&ndash;&gt;
+&lt;!&ndash;			   	error: function(data) {&ndash;&gt;
+&lt;!&ndash;			   	    $('#in-coupon').val(couponCode);&ndash;&gt;
+&lt;!&ndash;			   		toastr.warning(data.responseJSON.message);&ndash;&gt;
+&lt;!&ndash;			   	},&ndash;&gt;
+&lt;!&ndash;			});&ndash;&gt;
+&lt;!&ndash;        })&ndash;&gt;
         $('#btn-buy-now').click(function(){
                     alert(123);
 
         }
-<!--        $('#btn-buy-now').click(function() {-->
-<!--            alert(123);-->
-<!--            let receiverName = $('#in-user-fullname').val();-->
-<!--            let receiverPhone = $('#in-user-phone').val();-->
-<!--            let receiverAddress = $('#in-user-address').val();-->
-<!--            let isValid = true;-->
-<!--            if (receiverName.length == 0) {-->
-<!--                fullNameInvalid = $('#in-user-fullname').next();-->
-<!--                fullNameInvalid.css('display', 'block');-->
-<!--                fullNameInvalid.html('Vui lòng nhập họ tên người nhận hàng');-->
-<!--                isValid = false;-->
-<!--            }-->
-<!--            if (receiverPhone.length == 0) {-->
-<!--                phoneInvalid = $('#in-user-phone').next();-->
-<!--                phoneInvalid.css('display', 'block');-->
-<!--                phoneInvalid.html('Vui lòng nhập số điện thoại người nhận hàng');-->
-<!--                isValid = false;-->
-<!--            }-->
-<!--            let phoneFormat = new RegExp(/((09|03|07|08|05)+([0-9]{8})\b)/g);-->
-<!--            if (!phoneFormat.test(receiverPhone)) {-->
-<!--                phoneInvalid = $('#in-user-phone').next();-->
-<!--                phoneInvalid.css('display', 'block');-->
-<!--                phoneInvalid.html('Số điện thoại không hợp lệ');-->
-<!--                isValid = false;-->
-<!--            }-->
-<!--            if (receiverAddress.length == 0) {-->
-<!--                addressInvalid = $('#in-user-address').next();-->
-<!--                addressInvalid.css('display', 'block');-->
-<!--                addressInvalid.html('Vui lòng nhập địa chỉ nhận hàng');-->
-<!--                isValid = false;-->
-<!--            }-->
-<!--            let size = $('.size-btn').val();-->
-<!--&lt;!&ndash;            let size = $('.size-choose').data("id");&ndash;&gt;-->
-<!--&lt;!&ndash;            if (size == null || size == "") {&ndash;&gt;-->
-<!--&lt;!&ndash;                $('.not-found-size').show();&ndash;&gt;-->
-<!--&lt;!&ndash;                isValid = false;&ndash;&gt;-->
-<!--&lt;!&ndash;            }&ndash;&gt;-->
+&lt;!&ndash;        $('#btn-buy-now').click(function() {&ndash;&gt;
+&lt;!&ndash;            alert(123);&ndash;&gt;
+&lt;!&ndash;            let receiverName = $('#in-user-fullname').val();&ndash;&gt;
+&lt;!&ndash;            let receiverPhone = $('#in-user-phone').val();&ndash;&gt;
+&lt;!&ndash;            let receiverAddress = $('#in-user-address').val();&ndash;&gt;
+&lt;!&ndash;            let isValid = true;&ndash;&gt;
+&lt;!&ndash;            if (receiverName.length == 0) {&ndash;&gt;
+&lt;!&ndash;                fullNameInvalid = $('#in-user-fullname').next();&ndash;&gt;
+&lt;!&ndash;                fullNameInvalid.css('display', 'block');&ndash;&gt;
+&lt;!&ndash;                fullNameInvalid.html('Vui lòng nhập họ tên người nhận hàng');&ndash;&gt;
+&lt;!&ndash;                isValid = false;&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;            if (receiverPhone.length == 0) {&ndash;&gt;
+&lt;!&ndash;                phoneInvalid = $('#in-user-phone').next();&ndash;&gt;
+&lt;!&ndash;                phoneInvalid.css('display', 'block');&ndash;&gt;
+&lt;!&ndash;                phoneInvalid.html('Vui lòng nhập số điện thoại người nhận hàng');&ndash;&gt;
+&lt;!&ndash;                isValid = false;&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;            let phoneFormat = new RegExp(/((09|03|07|08|05)+([0-9]{8})\b)/g);&ndash;&gt;
+&lt;!&ndash;            if (!phoneFormat.test(receiverPhone)) {&ndash;&gt;
+&lt;!&ndash;                phoneInvalid = $('#in-user-phone').next();&ndash;&gt;
+&lt;!&ndash;                phoneInvalid.css('display', 'block');&ndash;&gt;
+&lt;!&ndash;                phoneInvalid.html('Số điện thoại không hợp lệ');&ndash;&gt;
+&lt;!&ndash;                isValid = false;&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;            if (receiverAddress.length == 0) {&ndash;&gt;
+&lt;!&ndash;                addressInvalid = $('#in-user-address').next();&ndash;&gt;
+&lt;!&ndash;                addressInvalid.css('display', 'block');&ndash;&gt;
+&lt;!&ndash;                addressInvalid.html('Vui lòng nhập địa chỉ nhận hàng');&ndash;&gt;
+&lt;!&ndash;                isValid = false;&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;            let size = $('.size-btn').val();&ndash;&gt;
+&lt;!&ndash;&lt;!&ndash;            let size = $('.size-choose').data("id");&ndash;&gt;&ndash;&gt;
+&lt;!&ndash;&lt;!&ndash;            if (size == null || size == "") {&ndash;&gt;&ndash;&gt;
+&lt;!&ndash;&lt;!&ndash;                $('.not-found-size').show();&ndash;&gt;&ndash;&gt;
+&lt;!&ndash;&lt;!&ndash;                isValid = false;&ndash;&gt;&ndash;&gt;
+&lt;!&ndash;&lt;!&ndash;            }&ndash;&gt;&ndash;&gt;
 
-<!--            if (isValid) {-->
-<!--                req = {-->
-<!--                    product_id: [[${product.id}]],-->
-<!--                    size: size,-->
-<!--                    receiver_name: receiverName,-->
-<!--                    receiver_phone: receiverPhone,-->
-<!--                    receiver_address: receiverAddress,-->
-<!--&lt;!&ndash;                    coupon_code: couponCode,&ndash;&gt;-->
-<!--&lt;!&ndash;                    total_price: totalPrice,&ndash;&gt;-->
-<!--                    product_price: price-->
-<!--                }-->
-<!--                var myJSON = JSON.stringify(req);-->
-<!--                $.ajax({-->
-<!--                    url: '/api/order',-->
-<!--                    type: 'POST',-->
-<!--                    data: myJSON,-->
-<!--                    contentType: "application/json; charset=utf-8",-->
-<!--                    success: function(data) {-->
-<!--                        toastr.success("Đặt hàng thành công");-->
-<!--                        setTimeout(function() {-->
-<!--                            location.href = "/tai-khoan/lich-su-giao-dich/"+data;-->
-<!--                        }, 1000)-->
-<!--                    },-->
-<!--                    error: function(data) {-->
-<!--                        toastr.warning(data.responseJSON.message);-->
-<!--                    },-->
-<!--                });-->
-<!--            }-->
-<!--        })-->
-    </script>
+&lt;!&ndash;            if (isValid) {&ndash;&gt;
+&lt;!&ndash;                req = {&ndash;&gt;
+&lt;!&ndash;                    product_id: [[${product.id}]],&ndash;&gt;
+&lt;!&ndash;                    size: size,&ndash;&gt;
+&lt;!&ndash;                    receiver_name: receiverName,&ndash;&gt;
+&lt;!&ndash;                    receiver_phone: receiverPhone,&ndash;&gt;
+&lt;!&ndash;                    receiver_address: receiverAddress,&ndash;&gt;
+&lt;!&ndash;&lt;!&ndash;                    coupon_code: couponCode,&ndash;&gt;&ndash;&gt;
+&lt;!&ndash;&lt;!&ndash;                    total_price: totalPrice,&ndash;&gt;&ndash;&gt;
+&lt;!&ndash;                    product_price: price&ndash;&gt;
+&lt;!&ndash;                }&ndash;&gt;
+&lt;!&ndash;                var myJSON = JSON.stringify(req);&ndash;&gt;
+&lt;!&ndash;                $.ajax({&ndash;&gt;
+&lt;!&ndash;                    url: '/api/order',&ndash;&gt;
+&lt;!&ndash;                    type: 'POST',&ndash;&gt;
+&lt;!&ndash;                    data: myJSON,&ndash;&gt;
+&lt;!&ndash;                    contentType: "application/json; charset=utf-8",&ndash;&gt;
+&lt;!&ndash;                    success: function(data) {&ndash;&gt;
+&lt;!&ndash;                        toastr.success("Đặt hàng thành công");&ndash;&gt;
+&lt;!&ndash;                        setTimeout(function() {&ndash;&gt;
+&lt;!&ndash;                            location.href = "/tai-khoan/lich-su-giao-dich/"+data;&ndash;&gt;
+&lt;!&ndash;                        }, 1000)&ndash;&gt;
+&lt;!&ndash;                    },&ndash;&gt;
+&lt;!&ndash;                    error: function(data) {&ndash;&gt;
+&lt;!&ndash;                        toastr.warning(data.responseJSON.message);&ndash;&gt;
+&lt;!&ndash;                    },&ndash;&gt;
+&lt;!&ndash;                });&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;        })&ndash;&gt;
+    </script>-->
 
 </body>
 </html>

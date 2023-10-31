@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Product;
+import com.example.demo.entity.ProductSize;
 import com.example.demo.model.dto.ProductDto;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface ProductService {
 
     public List<ProductDto> getListNewProduct();
 
-    public int getQuantityByProductId(String id) ;
+    public boolean isExistProductSize(String id);
 }
