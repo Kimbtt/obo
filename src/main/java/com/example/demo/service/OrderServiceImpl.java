@@ -2,16 +2,22 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Order;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.User;
 import com.example.demo.model.request.CreateOrderReq;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.Cookie;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +43,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order createOrder(CreateOrderReq req) {
+    public Order createOrder(CreateOrderReq req, User user) {
+        // Lấy thời gian hiện tại
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+
         // Tạo 1 đối tượng order
         Order order = new Order();
 
@@ -48,8 +57,13 @@ public class OrderServiceImpl implements OrderService {
         // Lấy thông tin người tạo + người mua hàng
         // Tạm thời làm trường hợp 2 người là 1 guest,
         //Lấy cookie đã lưu
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails currentPrincipal = (UserDetails) authentication.getPrincipal();
+        // Lấy user
+        String userEmail = currentPrincipal.getUsername();
 
-        // Lấy id => lấy ng dùng
+
+        // Lấy User => lấy ng dùng
 //        Optional<User> userOptional = userRepository.findById()
 
 
@@ -62,6 +76,9 @@ public class OrderServiceImpl implements OrderService {
             order.setReceiverAddress(req.getReceiverAddress());
             order.setProductPrice(req.getProductPrice());
             order.setTotalPrice(req.getTotalPrice());
+            order.setBuyer(user);
+            order.setCreatedBy(user);
+            order.setCreatedAt(now);
             return orderRepository.save(order);
         }else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -71,5 +88,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteOrder(long id) {
         orderRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Order> getOrderByUser(User user) {
+        List<Order> listOrder = orderRepository.findAllByBuyer(user);
+        return listOrder;
     }
 }

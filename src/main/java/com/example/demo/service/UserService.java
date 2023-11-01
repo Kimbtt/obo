@@ -15,4 +15,6 @@ public interface UserService {
     public Optional<User> getUserById(long id);
 
     public boolean deleteUser(Long id);
+
+     User getUserByEmail(String email);
 }
