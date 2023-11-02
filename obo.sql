@@ -31,12 +31,12 @@ CREATE TABLE `brand` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `thumbnail` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `brand`
 --
-
+#
 INSERT INTO `brand` (`id`, `name`, `thumbnail`) VALUES
 (1, 'Adidas', '/image/brand/adidas.png'),
 (2, 'Air Jordan', '/image/brand/air_jordan.png'),
@@ -54,7 +54,7 @@ INSERT INTO `brand` (`id`, `name`, `thumbnail`) VALUES
 CREATE TABLE `category` (
   `id` int NOT NULL,
   `name` varchar(300) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `category`
@@ -74,7 +74,7 @@ INSERT INTO `category` (`id`, `name`) VALUES
 CREATE TABLE `configuration` (
   `id` bigint NOT NULL,
   `obo_choices` json DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `configuration`
@@ -95,7 +95,7 @@ CREATE TABLE `finance` (
   `created_at` datetime DEFAULT NULL,
   `created_by` bigint DEFAULT NULL,
   `order_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `finance`
@@ -118,7 +118,7 @@ CREATE TABLE `image` (
   `type` varchar(255) DEFAULT NULL,
   `uploaded_at` datetime DEFAULT NULL,
   `uploaded_by` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- --------------------------------------------------------
 
@@ -143,7 +143,7 @@ CREATE TABLE `orders` (
   `created_by` bigint DEFAULT NULL,
   `modified_by` bigint DEFAULT NULL,
   `product_id` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `orders`
@@ -174,7 +174,7 @@ CREATE TABLE `post` (
   `title` varchar(300) NOT NULL,
   `created_by` bigint DEFAULT NULL,
   `modified_by` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `post`
@@ -204,7 +204,7 @@ CREATE TABLE `product` (
   `slug` varchar(255) NOT NULL,
   `total_sold` int DEFAULT NULL,
   `brand_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `product`
@@ -248,7 +248,7 @@ INSERT INTO `product` (`id`, `created_at`, `description`, `is_available`, `name`
 CREATE TABLE `product_category` (
   `product_id` varchar(255) NOT NULL,
   `category_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `product_category`
@@ -303,7 +303,7 @@ CREATE TABLE `product_size` (
   `product_id` varchar(255) NOT NULL,
   `size` int NOT NULL,
   `quantity` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `product_size`
@@ -377,7 +377,7 @@ CREATE TABLE `promotion` (
   `is_public` tinyint(1) DEFAULT NULL,
   `maximum_discount_value` bigint DEFAULT NULL,
   `name` varchar(300) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `promotion`
@@ -402,7 +402,7 @@ CREATE TABLE `users` (
   `phone` varchar(255) DEFAULT NULL,
   `roles` json NOT NULL,
   `status` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 --
 -- Đang đổ dữ liệu cho bảng `users`

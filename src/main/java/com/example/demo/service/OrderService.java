@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
+import com.example.demo.model.dto.OrderDto;
 import com.example.demo.model.request.CreateOrderReq;
 
 import java.util.List;
@@ -15,6 +16,5 @@ public interface OrderService {
 
     List<Order> getOrderByUser (User user);
 
-
-
+    List<OrderDto> getOrderHistoryByUser(User user);
 }

@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
+import com.example.demo.model.dto.OrderDto;
+import com.example.demo.model.mapper.OrderMapper;
 import com.example.demo.model.request.CreateOrderReq;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.ProductRepository;
@@ -93,6 +95,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getOrderByUser(User user) {
         List<Order> listOrder = orderRepository.findAllByBuyer(user);
+        return listOrder;
+    }
+
+    @Override
+    public List<OrderDto> getOrderHistoryByUser(User user) {
+//        OrderMapper orderMapper = new OrderMapper();
+        List<OrderDto> listOrder = orderRepository.findAllByBuyer(user)
+                .stream()
+                .map(OrderMapper::toOrderDto)
+                .toList();
+
         return listOrder;
     }
 }

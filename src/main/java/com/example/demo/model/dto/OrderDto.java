@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class OrderDto {
+    private Long id;
     private String receiverName;
     private String receiverPhone;
     private String receiverAddress;

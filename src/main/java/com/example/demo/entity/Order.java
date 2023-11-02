@@ -30,7 +30,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "receiver_name")
     private String receiverName;

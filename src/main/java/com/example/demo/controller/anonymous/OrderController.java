@@ -5,6 +5,8 @@ import com.example.demo.entity.User;
 import com.example.demo.model.dto.OrderDto;
 import com.example.demo.model.dto.ProductDto;
 import com.example.demo.model.dto.UserDto;
+import com.example.demo.model.mapper.OrderMapper;
+import com.example.demo.model.mapper.ProductMapper;
 import com.example.demo.model.request.CreateOrderReq;
 import com.example.demo.security.CustomUserDetails;
 import com.example.demo.service.OrderService;
@@ -32,6 +34,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.demo.model.mapper.OrderMapper.*;
 
 @Controller
 public class OrderController {
@@ -92,8 +96,8 @@ public class OrderController {
      * Test gọi tất cả order
      *
      * */
-    @GetMapping("api/order/list")
-    public void getOrdersByEmail(
+    @GetMapping("api/order/list/csv")
+    public void exportCsvOrderList(
 //            @RequestParam("email") String email
             HttpServletResponse response
 
@@ -123,7 +127,7 @@ public class OrderController {
         };
 
         //
-        String [] namePapping ={
+        String[] namePapping = {
                 "createdAt",
                 "receiverName",
                 "receiverPhone",
@@ -132,11 +136,68 @@ public class OrderController {
         };
 
         csvWriter.writeHeader(csvHeader);
-        for (Order order1 : listOrders){
+        for (Order order1 : listOrders) {
             csvWriter.write(order1, namePapping);
         }
 
         csvWriter.close();
+    }
+
+    @GetMapping("tai-khoan/lich-su-giao-dich")
+    public String orderHistory(Model model) {
+        try {
+            // Lấy đối tượng đăng nhập
+            User currentUser =
+                    ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+            // Lấy danh sách order
+            List<OrderDto> listOrders = orderService.getOrderHistoryByUser(currentUser);
+//            if (listOrders.isEmpty()){
+//                // Return ra trang baáo lỗi
+//            }
+            model.addAttribute("orders", listOrders);
+
+            return "shop/order_history";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    /**
+     * Lấy thông tin order
+     * 1. lấy thông tin người dùng
+     * 2. lấy thông tin order
+     * 3. Kiểm tra
+     * Điều kiện: Order có thực thể && order.user === currentUser
+     * Nếu không có =>> báo lỗi
+     * Nếu có =>> trả về OrderDto
+     * <p>
+     * <p>
+     * Hoặc sử dụng query trong repository
+     * Điều kiện
+     * - có user là currentUser (param)
+     * - có id được truyền vào qua requestParam
+     *
+     * @param model
+     * @param id
+     * @return
+     */
+    @GetMapping("tai-khoan/lich-su-giao-dich/{id}")
+    public String orderDetail(Model model, @PathVariable Long id) {
+        try {
+            // Lấy đối tượng đăng nhập
+            User currentUser = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal()).getUser();
+            // Lấy danh sách order
+            Optional<Order> orderDetail = orderService.getOrderById(id);
+
+            if (orderDetail.isPresent() && orderDetail.get().getBuyer().getEmail().equals(currentUser.getEmail())) {
+                OrderDto orderDto = OrderMapper.toOrderDto(orderDetail.get());
+                model.addAttribute("order", orderDto);
+            }
+            return "shop/order_detail";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
 
