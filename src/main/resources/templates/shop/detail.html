@@ -35,73 +35,73 @@
         <span class="current-page" th:text="${product.name}"></span>
     </div>
 
-    <!-- Products Content Section-->
-<!--    <section class="product-content-wrapper container">-->
-<!--        <div class="common-info">-->
-<!--            <div class="name" th:text="${product.name}"></div>-->
-<!--        </div>-->
-<!--        <div class="main-info row">-->
-<!--            <div class="product-image col-lg-6">-->
-<!--                <div class="slider slider-for">-->
-<!--                    <div class="img-zoom-container">-->
-<!--                        <img class="img-fluid" th:src="${product.image}" alt="image-1"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="slider slider-nav">-->
-<!--                    <div th:each="img, index : ${product.image}">-->
-<!--                        <img class="img-fluid" th:src="${img}" th:alt="'img-'+${index.index}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="product-info col-lg-6">-->
-<!--                <div class="title h3">Mô tả sản phẩm</div>-->
-<!--                <div class="desc" th:utext="${product.description}"></div>-->
-<!--                <div class="desc-sub">-->
-<!--                    <span class="desc-sub-title">Hãng: </span>-->
-<!--&lt;!&ndash;                    <span th:text="${product.brand.name}"></span>&ndash;&gt;-->
-<!--                </div>-->
-<!--                <div class="desc-sub">-->
-<!--                    <span class="desc-sub-title">Đã bán: </span>-->
-<!--                    <span th:text="${product.totalSold} + ' đôi'"></span>-->
-<!--                </div>-->
-<!--                <div class="desc-sub">-->
-<!--                    <span class="desc-sub-title">Tình trạng: </span>-->
-<!--                    <span th:if="${canBuy}">Còn hàng</span>-->
-<!--                    <span th:unless="${canBuy}" style="color:#f04e40">Tạm hết hàng</span>-->
-<!--                </div>-->
-<!--                <div class="btns">-->
-<!--                    <div class="size-btn" data-toggle="modal" data-target="#sizeChooseModal">-->
-<!--                        <button class="btn btn-primary size trans-btn">-->
-<!--                            <span class="size-text">Size</span>-->
-<!--                            <span class="size-details"></span>-->
-<!--                            <i class="fas fa-chevron-down dropdown-arrow"></i>-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                    <div class="buy-btn">-->
-<!--                        <button class="btn btn-primary buy red-btn" th:classappend="${canBuy} == true ? '' : 'not-buy'">-->
-<!--&lt;!&ndash;                            <button class="btn btn-primary buy red-btn" >&ndash;&gt;-->
+<!--     Products Content Section-->
+    <section class="product-content-wrapper container">
+        <div class="common-info">
+            <div class="name" th:text="${product.name}"></div>
+        </div>
+        <div class="main-info row">
+            <div class="product-image col-lg-6">
+                <div class="slider slider-for">
+                    <div class="img-zoom-container">
+                        <img class="img-fluid" th:src="${product.image}" alt="image-1"/>
+                    </div>
+                </div>
+                <div class="slider slider-nav">
+                    <div th:each="img, index : ${product.image}">
+                        <img class="img-fluid" th:src="${img}" th:alt="'img-'+${index.index}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="product-info col-lg-6">
+                <div class="title h3">Mô tả sản phẩm</div>
+                <div class="desc" th:utext="${product.description}"></div>
+                <div class="desc-sub">
+                    <span class="desc-sub-title">Hãng: </span>
+<!--                    <span th:text="${product.brand.name}"></span>-->
+                </div>
+                <div class="desc-sub">
+                    <span class="desc-sub-title">Đã bán: </span>
+                    <span th:text="${product.totalSold} + ' đôi'"></span>
+                </div>
+                <div class="desc-sub">
+                    <span class="desc-sub-title">Tình trạng: </span>
+                    <span th:if="${canBuy}">Còn hàng</span>
+                    <span th:unless="${canBuy}" style="color:#f04e40">Tạm hết hàng</span>
+                </div>
+                <div class="btns">
+                    <div class="size-btn" data-toggle="modal" data-target="#sizeChooseModal">
+                        <button class="btn btn-primary size trans-btn">
+                            <span class="size-text">Size</span>
+                            <span class="size-details"></span>
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </button>
+                    </div>
+                    <div class="buy-btn">
+                        <button class="btn btn-primary buy red-btn" th:classappend="${canBuy} == true ? '' : 'not-buy'">
+<!--                            <button class="btn btn-primary buy red-btn" >-->
 
-<!--                            <div class="ask-text left-content">-->
-<!--                                <th:block th:if="${product.promotionPrice}">-->
-<!--                                    <div class="ask-desc sub-content old-price"><span class="text-price" th:text="${productProduct}"></span> &#x20AB;</div>-->
-<!--                                    <div class="ask-price main-content"><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</div>-->
-<!--                                </th:block>-->
-<!--                                <th:block th:unless="${product.promotionPrice}">-->
-<!--                                    <div class="ask-desc sub-content">Giá bán ưu đãi</div>-->
-<!--                                    <div class="ask-price main-content"><span class="text-price" th:text="${productProduct}"></span> &#x20AB;</div>-->
-<!--                                </th:block>-->
-<!--                            </div>-->
-<!--                            <div class="buy-text right-content">-->
-<!--                                <a th:href="@{/dat-hang/{slug}/{id}(id=${product.id}, slug=${product.slug})}">-->
-<!--                                    <div class="buy-now main-content">Mua ngay</div>-->
-<!--                                </a>-->
-<!--                            </div>-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </section>-->
+                            <div class="ask-text left-content">
+                                <th:block th:if="${product.promotionPrice}">
+                                    <div class="ask-desc sub-content old-price"><span class="text-price" th:text="${productProduct}"></span> &#x20AB;</div>
+                                    <div class="ask-price main-content"><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</div>
+                                </th:block>
+                                <th:block th:unless="${product.promotionPrice}">
+                                    <div class="ask-desc sub-content">Giá bán ưu đãi</div>
+                                    <div class="ask-price main-content"><span class="text-price" th:text="${productProduct}"></span> &#x20AB;</div>
+                                </th:block>
+                            </div>
+                            <div class="buy-text right-content">
+                                <a th:href="@{/dat-hang/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
+                                    <div class="buy-now main-content">Mua ngay</div>
+                                </a>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="break-section container-fluid"></div>
 
     <!-- Onfeet Images Section-->

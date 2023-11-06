@@ -60,7 +60,7 @@ public class OrderController {
     @PostMapping("/api/order")
     public ResponseEntity<?> creatOrder(
             @Valid @RequestBody CreateOrderReq req,
-            BindingResult result,
+//            BindingResult result,
             HttpServletResponse response
     ) {
         // Lấy thông tin người dùng
@@ -75,14 +75,14 @@ public class OrderController {
         User currentUser = userService.getUserByEmail(currentUserEmail);
 
         try {
-            if (result.hasErrors()) {
-                // Check form nếu có lỗi thì trả về =>> có thể k cần thiết vì fe đã xử lý rồi
-                List<String> errMess = result.getFieldErrors()
-                        .stream()
-                        .map(FieldError::getDefaultMessage)
-                        .toList();
-                return ResponseEntity.badRequest().body(errMess);
-            }
+//            if (result.hasErrors()) {
+//                // Check form nếu có lỗi thì trả về =>> có thể k cần thiết vì fe đã xử lý rồi
+//                List<String> errMess = result.getFieldErrors()
+//                        .stream()
+//                        .map(FieldError::getDefaultMessage)
+//                        .toList();
+//                return ResponseEntity.badRequest().body(errMess);
+//            }
             // Tạo 1 đối tượng mới
             Order order = orderService.createOrder(req, currentUser);
 

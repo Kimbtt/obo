@@ -6,11 +6,16 @@ import com.example.demo.model.mapper.ProductMapper;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.ProductSizeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.demo.config.Constant.LIMIT_POST_PER_PAGE;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -51,6 +56,13 @@ public class ProductServiceImpl implements ProductService {
             result.add(ProductMapper.toProductDto(product));
         }
         return result;
+    }
+
+    @Override
+    public Page<Product> getListProduct(Integer page) {
+        Pageable pageable = PageRequest.of(page, LIMIT_POST_PER_PAGE);
+
+        return productRepository.findAll(pageable);
     }
 
     /**

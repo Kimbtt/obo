@@ -9,18 +9,15 @@ import javax.validation.constraints.*;
 
 @Data
 public class CreateOrderReq {
-    @NotEmpty(message = "K có id sản phẩm")
     @NotNull(message = "K có id sản phẩm")
     @JsonProperty("product_id")// Trường khi nhận từ Fe
     private String productId;
 
-//    @Min(value = 35)
-//    @Max(value = 42)
-    
+    @Min(value = 35)
+    @Max(value = 42)
     private int size;
 
     @NotNull(message = "Bạn cần nhập họ tên người nhận")
-    @NotEmpty(message = "Bạn cần nhập họ tên người nhận")
     @JsonProperty("receiver_name")
     private String receiverName;
 
@@ -29,7 +26,6 @@ public class CreateOrderReq {
     private String receiverPhone;
 
     @NotNull(message = "Bạn cần nhập địa chỉ người nhận")
-    @NotEmpty(message = "Bạn cần nhập địa chỉ người nhận")
     @JsonProperty("receiver_address")
     private String receiverAddress;
 
@@ -39,6 +35,7 @@ public class CreateOrderReq {
     @JsonProperty("product_price")
     private long productPrice;
 
+    @Min(value = 0, message = "Tổng giá phải lớn hơn 0")
     @JsonProperty("total_price")
     private long totalPrice;
 }

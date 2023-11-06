@@ -169,11 +169,10 @@
             if (isValid) {
                 req = {
                     product_id: id,
-                    size:size,
+                    size:25,
                     receiver_name: receiverName,
                     receiver_phone: receiverPhone,
                     receiver_address: receiverAddress,
-
                     product_price: price,
                     total_price: totalPrice,
                 }
@@ -188,7 +187,7 @@
                         toastr.success("Đặt hàng thành công");
                         setTimeout(function() {
                             location.href = "/tai-khoan/lich-su-giao-dich/";
-                        }, 10000)
+                        }, 5000)
                     },
                     error: function(data) {
                         toastr.alert("đặt hàng thất bại");

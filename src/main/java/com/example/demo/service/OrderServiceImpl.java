@@ -78,6 +78,7 @@ public class OrderServiceImpl implements OrderService {
             order.setReceiverAddress(req.getReceiverAddress());
             order.setProductPrice(req.getProductPrice());
             order.setTotalPrice(req.getTotalPrice());
+            order.setSize(req.getSize());
             order.setBuyer(user);
             order.setCreatedBy(user);
             order.setCreatedAt(now);

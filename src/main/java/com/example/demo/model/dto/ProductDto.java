@@ -5,20 +5,24 @@ import lombok.*;
 import java.util.ArrayList;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDto {
 
     private Long promotionPrice;
+
     private String id;
 
     private String name;
 
     private String slug;
 
-    private long price;
+    private Long price;
 
-    private int totalSold;
+    private Integer totalSold;
 
-    private int brandId;
+    private Integer brandId;
 
     private String image;
 

@@ -276,7 +276,7 @@
                         toastr.success("Tạo đơn hàng thành công");
                         setTimeout(function() {
                             location.href = "/admin/orders/"+data;
-                        }, 1000)
+                        }, 500)
                     },
                     error: function(data) {
                         toastr.warning(data.responseJSON.message);

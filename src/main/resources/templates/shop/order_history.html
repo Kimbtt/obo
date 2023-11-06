@@ -66,7 +66,7 @@
                                     <div class="product-info-wrapper">
                                         <div class="thumbnails"><img class="img-fluid" th:src="@{${item.product.productImages[0]}}" th:alt="${item.product.name}"/></div>
                                         <div class="product-info"><span class="name" th:text="${item.product.name}"></span>
-                                            <div class="size"> <span th:text="${item.size}"></span>VN | </div>
+                                            <div class="size"> <span th:text="'Size: ' + ${item.size}"></span> </div>
                                         </div>
                                     </div>
                                     <div class="price bid-price"><span class="text-price" th:text="${item.totalPrice}"></span> &#x20AB;</div>
