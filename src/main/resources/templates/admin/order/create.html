@@ -108,7 +108,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="size">Kích cỡ 111</label>
+                                <label>Kích cỡ</label>
                                 <select name="size"  class="form-control" id="size1">
                                     <option value="defaul">---Chọn size---</option>
                                     <th:block th:each="size : ${sizes}">
@@ -240,7 +240,7 @@
             let receiverAddress = $('#receiver-address').val();
             let note = $('#receiver-note').val();
             let product = $('#product').val();
-            let size = $('#size').val();
+            let size = $('#size1').val();
             let promotion = $('#promotion').val();
             let isValid = true;
 
@@ -283,7 +283,7 @@
                         toastr.success("Tạo đơn hàng thành công");
                         setTimeout(function () {
                             location.href = "/admin/orders/" + data;
-                        }, 500)
+                        }, 100)
                     },
                     error: function (data) {
                         toastr.warning(data.responseJSON.message);

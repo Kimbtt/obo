@@ -3,7 +3,9 @@ package com.example.demo.controller.admin;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.ProductSize;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.dto.OrderDto;
+import com.example.demo.model.request.OrderFilterDto;
 import com.example.demo.model.request.UpdateOrderReq;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.ProductService;
@@ -38,29 +40,25 @@ public class AdminOrderManagerController {
     @GetMapping("admin/orders")
     public String getFilterOrders(
             Model model,
-            @RequestParam(value = "id", required = false) Long orderId,
-            @RequestParam(value = "name", required = false) String productName,
-            @RequestParam(value = "phone", required = false) String receiverPhone,
-            @RequestParam(value = "status", required = false) Integer status,
-            @RequestParam(value = "page", defaultValue = "1") Integer page
-//            @RequestParam(value = "size", defaultValue = "10") int size
+            @ModelAttribute OrderFilterDto filterDto
     ) {
-        if (page == null) {
-            page = 0;
+        if (filterDto.getPage() > 0) {
+            filterDto.setPage(filterDto.getPage() - 1);
         } else {
-            page--;
-            if (page < 0) {
-                page = 0;
-            }
+            filterDto.setPage(0);
         }
+
         // Lấy list orders sau sort
-        Page<Order> listFilterOrder = orderService.getFilterOrders(orderId, productName, receiverPhone, status, page);
+        Page<Order> listFilterOrder = orderService.getFilterOrders(
+                filterDto.getId(),
+                filterDto.getName(),
+                filterDto.getPhone(),
+                filterDto.getStatus(),
+                filterDto.getPage()
+        );
 
         if (listFilterOrder == null) {
-            // Lay tat ca danh sach order
-            List<Order> listOrders = orderService.getAllOrders();
-            // Đút vào fe
-            model.addAttribute("orders", listOrders);
+            throw new NotFoundException("K có dữ liệu");
         } else {
             // Add vào model
             model.addAttribute("orders", listFilterOrder.getContent());
