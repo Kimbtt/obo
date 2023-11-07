@@ -97,7 +97,7 @@
                             <div class="form-group">
                                 <label for="product">Sản phẩm</label>
                                 <select name="product" class="form-control thuy-search-select" id="product">
-                                    <option value="defaul">---Chọn sản phẩm---</option>
+                                    <option value="">Chọn sản phẩm</option>
                                     <th:block th:each="product : ${products}">
                                         <option th:value="${product.id}" th:text="${product.name}"></option>
                                     </th:block>
@@ -110,7 +110,7 @@
                             <div class="form-group">
                                 <label>Kích cỡ</label>
                                 <select name="size"  class="form-control" id="size1">
-                                    <option value="defaul">---Chọn size---</option>
+                                    <option value="">Chọn size</option>
                                     <th:block th:each="size : ${sizes}">
                                         <option th:value="${size}" th:text="${size}"></option>
                                     </th:block>
@@ -167,10 +167,10 @@
         let promotionPrice = 0;
         let totalPrice = 0;
 
-        $(function () {
-            $('#product').val(products[0].id);
-            eventChangeProduct();
-        })
+        // $(function () {
+        //     $('#product').val(products[0].id);
+        //     eventChangeProduct();
+        // })
 
         $('#product').change(function () {
             eventChangeProduct();
