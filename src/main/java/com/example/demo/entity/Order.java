@@ -2,10 +2,7 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -22,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name="orders")
 @Table(name = "orders")
+@Builder
 @TypeDef(
         name = "json",
         typeClass = JsonStringType.class
@@ -73,7 +71,7 @@ public class Order {
     private User modifiedBy;
 
     @Column(name = "status")
-    private int status;
+    private Integer status;
 
     @Type(type = "json")
     @Column(name = "promotion", columnDefinition = "json")

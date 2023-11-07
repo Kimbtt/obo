@@ -15,6 +15,7 @@ public interface ProductService {
     public List<ProductDto> getListNewProduct();
 
     public Page<Product> getListProduct(Integer page);
+    public List<Product> getAllProducts();
 
     public boolean isExistProductSize(String id);
 }

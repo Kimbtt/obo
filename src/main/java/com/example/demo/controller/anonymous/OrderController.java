@@ -60,19 +60,20 @@ public class OrderController {
     @PostMapping("/api/order")
     public ResponseEntity<?> creatOrder(
             @Valid @RequestBody CreateOrderReq req,
-//            BindingResult result,
             HttpServletResponse response
     ) {
         // Lấy thông tin người dùng
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails currentUserDetails = (UserDetails) authentication.getPrincipal();
+
+        User currentUser =
+                ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                        .getUser();
+
         if (!currentUserDetails.isEnabled()) {
             // Xử lý trường hợp khi Principal không phải là User (có thể là anonymous user, null, hoặc đối tượng khác)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
         }
-        String currentUserEmail = currentUserDetails.getUsername();
-        // lấy ra usẻr
-        User currentUser = userService.getUserByEmail(currentUserEmail);
 
         try {
 //            if (result.hasErrors()) {

@@ -57,7 +57,7 @@ public class ShopController {
     }
 
     /**
-     * @param model
+     * @param model hello baby
      * @param slug
      * @param id
      * @return
@@ -68,9 +68,10 @@ public class ShopController {
             @PathVariable("slug") String slug,
             @PathVariable("id") String id
     ) {
-        try {
             // Lấy product theo id
             Optional<ProductDto> productDtoOptional = productService.getProductById(id);
+
+            // Nếu productDtoOpt tồn tại
             if (productDtoOptional.isPresent()) {
                 //Add vào model
                 model.addAttribute("product", productDtoOptional.get());
@@ -82,17 +83,15 @@ public class ShopController {
 
                 // Nếu trong bảng ProductSize có id => còn hàng
                 model.addAttribute("canBuy", productService.isExistProductSize(id));
+                return "/shop/detail";
             }
-            return "/shop/detail";
-        } catch (Exception e) {
             return "Lỗi";
-        }
     }
 
 
     /**
      * Laays danh sach san pham
-     * <p>
+     *
      * 1. Lấy danh sách thương hiệu (brands - id, name)
      * 2. Lấy danh sách danh mục (categories - id, name)
      * 3. Lấy danh sách size (size)
@@ -115,14 +114,7 @@ public class ShopController {
         Page<Product> products = productService.getListProduct(page);
 
         // Chuyển về dto
-        Page<ProductDto> productDtos = products.map(ProductMapper::toProductDto);
-
-        System.out.println("------------------------------------------------");
-//        for (ProductDto productDto : productDtos) {
-//            System.out.println(productDto.getPrice());
-//        }
-        System.out.println(productDtos);
-        System.out.println("------------------------------------------------");
+        Page<ProductDto> productDto = products.map(ProductMapper::toProductDto);
 
         // Lay danh sach thương hiệu (Brand)
         List<Brand> brands = brandService.getListBrand();
@@ -130,10 +122,8 @@ public class ShopController {
         // Lay danh sách categories
         List<Category> categories = categoryService.getListCategories();
 
-
-
         // Đẩy ra màn hình
-        model.addAttribute("listProduct", productDtos.getContent());
+        model.addAttribute("listProduct", productDto.getContent());
         model.addAttribute("brands", brands);
         model.addAttribute("categories", categories);
         model.addAttribute("sizeVn", Size_VN);

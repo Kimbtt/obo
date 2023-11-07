@@ -1,13 +1,19 @@
 package com.example.demo.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Check;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.*;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateOrderReq {
     @NotNull(message = "K có id sản phẩm")
     @JsonProperty("product_id")// Trường khi nhận từ Fe

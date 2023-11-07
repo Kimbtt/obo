@@ -13,5 +13,5 @@ public class OrderDto {
     private int size;
     private long productPrice;
     private long totalPrice;
-
+    private Integer status;
 }

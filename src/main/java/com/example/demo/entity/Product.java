@@ -35,29 +35,40 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private String id;
+
     @Field(termVector = TermVector.YES,analyze = Analyze.YES,store = Store.NO)
     @Column(name ="name",nullable = false,length = 255)
     private String name;
+
     @Column(name = "slug",nullable = false,length = 300)
     private String slug;
+
     @Column(name = "brand_id")
     private int brandId;
+
     @Column(name = "description",columnDefinition = "TEXT")
     private String description;
+
     @Column(name = "is_available")
     private Boolean isAvailable;
+
     @Column(name = "created_at")
     private Timestamp createdAt;
+
     @Column(name = "price")
     private long price;
+
     @Type(type = "json")
     @Column(name = "onfeet_images",columnDefinition = "json")
     private ArrayList<String> onfeetImages;
+
     @Type(type = "json")
     @Column(name = "product_images",columnDefinition = "json")
     private ArrayList<String> productImages;
+
     @Column(name = "total_sold")
     private int totalSold;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "product_category",
