@@ -4,15 +4,12 @@ import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
 import com.example.demo.model.dto.OrderDto;
 import com.example.demo.model.dto.ProductDto;
-import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.mapper.OrderMapper;
-import com.example.demo.model.mapper.ProductMapper;
 import com.example.demo.model.request.CreateOrderReq;
 import com.example.demo.security.CustomUserDetails;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
-import org.apache.commons.collections4.Get;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
@@ -34,8 +29,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
-
-import static com.example.demo.model.mapper.OrderMapper.*;
 
 @Controller
 public class OrderController {
@@ -218,7 +211,7 @@ public class OrderController {
     ) {
         try {
             // Lấy product theo id
-            Optional<ProductDto> productDtoOptional = productService.getProductById(id);
+            Optional<ProductDto> productDtoOptional = productService.getProductDtoById(id);
             if (productDtoOptional.isPresent()) {
                 //Add vào model
                 model.addAttribute("product", productDtoOptional.get());

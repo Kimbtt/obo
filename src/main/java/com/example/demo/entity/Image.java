@@ -23,7 +23,7 @@ public class Image {
     private String name;
 
     @Column(name = "size")
-    private long size;
+    private Long size;
 
     @Column(name = "type")
     private String type;

@@ -4,18 +4,24 @@ import com.example.demo.entity.Product;
 import com.example.demo.entity.ProductSize;
 import com.example.demo.model.dto.ProductDto;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    public Optional<ProductDto> getProductById(String Id);
-//    public Product getProductById(String Id);
+    Optional<ProductDto> getProductDtoById(String Id);
 
-    public List<ProductDto> getListNewProduct();
+    Optional<Product> getProductById(String Id);
+//     Product getProductById(String Id);
 
-    public Page<Product> getListProduct(Integer page);
-    public List<Product> getAllProducts();
+    List<ProductDto> getListNewProduct();
 
-    public boolean isExistProductSize(String id);
+    Page<Product> getListProduct(Integer page);
+
+    List<Product> getAllProducts();
+
+    boolean isExistProductSize(String id);
+
+    String uploadImg(MultipartFile file);
 }

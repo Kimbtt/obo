@@ -49,7 +49,7 @@ public class ShopController {
 
     @GetMapping("/product/{id}")
     public ResponseEntity<?> getProductById(@PathVariable String id) {
-        Optional<ProductDto> rs = productService.getProductById(id);
+        Optional<ProductDto> rs = productService.getProductDtoById(id);
         if (!rs.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Khong tim thay san pham");
         }
@@ -69,7 +69,7 @@ public class ShopController {
             @PathVariable("id") String id
     ) {
             // Lấy product theo id
-            Optional<ProductDto> productDtoOptional = productService.getProductById(id);
+            Optional<ProductDto> productDtoOptional = productService.getProductDtoById(id);
 
             // Nếu productDtoOpt tồn tại
             if (productDtoOptional.isPresent()) {

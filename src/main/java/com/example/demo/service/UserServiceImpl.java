@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.User;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.request.CreateUserReq;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
@@ -75,5 +78,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        User currentUser = ((CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        System.out.println(currentUser);
+        return currentUser;
+    }
+
+    @Override
+    public User updateUser(User userUpdate) {
+        if (userUpdate != null) {
+            return userRepository.save(userUpdate);
+        }
+        throw new NotFoundException("Thông tin không hợp lệ!");
     }
 }

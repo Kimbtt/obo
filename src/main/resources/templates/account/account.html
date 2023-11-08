@@ -28,16 +28,16 @@
         <div class="header">
 
           <div class="avatar">
-            <th:block th:if="${fileName} == null">
+            <th:block th:if="${user.getAvatar()} == null">
               <img class="img-fluid" th:src="@{/image/post/avatar.png}" alt="avatar"/>
             </th:block>
-            <th:block th:if="${fileName} != null">
-              <img class="img-fluid" th:src="${resource}" alt="avatar"/>
+            <th:block th:if="${user.getAvatar()} != null">
+              <img class="img-fluid" src="${user.getAvatar()}" alt="avatar"/>
             </th:block>
 
           </div>
           <div class="user-info">
-            <div class="user-name" th:text="${user_fullname}"></div>
+            <div class="user-name" th:text="${user.getName()}"></div>
             <div class="edit-profile"> <a  data-toggle="modal" data-target="#editProfileModal">Chỉnh sửa ảnh chân dung</a></div>
           </div>
         </div>
@@ -58,13 +58,13 @@
               <div class="full-name item-row col-md-10">
                 <div class="text required-label">Họ tên</div>
                 <div>
-                  <input class="form-control" th:value="${user_fullname}" id="in-user-fullname"/>
+                  <input class="form-control" th:value="${user.getName()}" id="in-user-fullname"/>
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="email item-row col-md-10">
                 <div class="text required-label">Email</div>
-                <input class="form-control" disabled="disabled" th:value="${user_email}"/>
+                <input class="form-control" disabled="disabled" th:value="${user.getEmail()}"/>
               </div>
               <div class="password item-row col-md-10">
                 <div class="text required-label">Mật khẩu</div>
@@ -76,7 +76,7 @@
               <div class="phone item-row col-md-10">
                 <div class="text required-label">Số điện thoại</div>
                 <div>
-                  <input class="form-control" th:value="${user_phone}" id="in-user-phone"/>
+                  <input class="form-control" th:value="${user.getPhone()}" id="in-user-phone"/>
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
@@ -184,7 +184,7 @@
     $('#uploadForm').submit(function(e) {
     e.preventDefault();
     var formData = new FormData();
-    formData.append('file', $('#fileInput')[0].files[0]);
+    formData.append('fileData', $('#fileInput')[0].files[0]);
     $.ajax({
     url: '/upload',
     type: 'POST',

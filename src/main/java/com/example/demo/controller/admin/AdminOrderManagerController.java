@@ -23,6 +23,7 @@ import java.util.Optional;
 import static com.example.demo.config.Constant.Size_VN;
 
 @Controller
+@RequestMapping("admin/orders")
 @RequiredArgsConstructor
 public class AdminOrderManagerController {
     private final OrderService orderService;
@@ -37,7 +38,7 @@ public class AdminOrderManagerController {
      * @param page          số trang
      * @return page
      */
-    @GetMapping("admin/orders")
+    @GetMapping("")
     public String getFilterOrders(
             Model model,
             @ModelAttribute OrderFilterDto filterDto
@@ -73,7 +74,7 @@ public class AdminOrderManagerController {
      * @return detail
      * @throws Exception
      */
-    @GetMapping("admin/orders/{id}")
+    @GetMapping("/{id}")
     public String getOrderById(Model model, @PathVariable long id) throws Exception {
         Optional<Order> order = orderService.getOrderById(id);
         if (order.isPresent()) {
@@ -87,7 +88,7 @@ public class AdminOrderManagerController {
 
 
     // Cập nhật đơn hàng
-    @PutMapping("admin/orders/{id}/update-status")
+    @PutMapping("/{id}/update-status")
     public ResponseEntity<?> updateOrder(@PathVariable Long id, @RequestBody UpdateOrderReq req) {
         Order order = orderService.updateOrder(id, req);
         return (order != null)
@@ -96,15 +97,12 @@ public class AdminOrderManagerController {
     }
 
     //Tạo đơn hàng mới
-    @GetMapping("admin/orders/create")
+    @GetMapping("/create")
     public String createOrderPage(Model model) {
 
         //Lấy danh sách sản phẩm
         List<Product> products = productService.getAllProducts();
         if (!products.isEmpty()) {
-//            List<String> productNames = products.stream()
-//                    .map(Product::getName)
-//                    .toList();
             model.addAttribute("products", products);
         }
         // Lấy danh sách size
