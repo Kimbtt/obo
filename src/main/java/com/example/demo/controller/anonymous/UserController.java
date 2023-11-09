@@ -2,25 +2,19 @@ package com.example.demo.controller.anonymous;
 
 
 import com.example.demo.entity.User;
-import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.UploadForm;
-import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.mapper.UserMapper;
-import com.example.demo.model.request.AuthenticateReq;
 import com.example.demo.model.request.CreateUserReq;
 import com.example.demo.model.request.LoginReq;
 import com.example.demo.security.CustomUserDetails;
 import com.example.demo.security.JwtTokenUtil;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,9 +28,11 @@ import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FilterOutputStream;
-import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.PublicKey;
 import java.util.List;
+import java.util.UUID;
 
 import static com.example.demo.config.Constant.MAX_AGE_COOKIE;
 
@@ -80,19 +76,14 @@ public class UserController {
      * Đăng nhập
      *
      * @param LoginReq            req
-     * @param HttpServletResponse response
+     * @param HttpServletResonse response
      * @return
      */
     @PostMapping("/api/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginReq req, HttpServletResponse response) {
         // Authenticate
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            req.getEmail(),
-                            req.getPassword()
-                    )
-            );
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
 
             // Gen token
             String token = jwtTokenUtil.generateToken((CustomUserDetails) authentication.getPrincipal());
@@ -156,6 +147,12 @@ public class UserController {
         if (currentUser == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+        String pathAvatar = currentUser.getAvatar();
+        if (pathAvatar != null) {
+            String targetPath = pathAvatar.substring(pathAvatar.lastIndexOf("\\image\\")).replace('\\', '/');
+            System.out.println("targetPath" + targetPath);
+            model.addAttribute("pathAvatar", targetPath);
+        }
         model.addAttribute("user", currentUser);
         System.out.println("currentUser.getAvatar().toString" + currentUser.getAvatar().toString());
 
@@ -170,18 +167,21 @@ public class UserController {
     @PostMapping("upload")
     public ResponseEntity<?> uploadAvatar(@ModelAttribute("uploadForm") UploadForm form) {
         // tạo folder để save file nếu chưa có
-        File uploadDir = new File(UPLOAD_DIR);
+        File uploadDir = new File(UPLOAD_DIR.toString());
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
         }
 
-
         // Lấy ra file
         MultipartFile fileData = form.getFileData();
-        //Lấy tên file
-        String name = fileData.getOriginalFilename();
 
-        //Kiểm tra tên hợp lệ
+        //lấy đuôi
+        String extension = fileData.getOriginalFilename().substring(fileData.getOriginalFilename().lastIndexOf("."));
+
+        //Lấy tên file
+        String name = UUID.randomUUID().toString().replace("-", "") + extension;
+
+        //Kiểm tra tên
         if (name != null && !name.isEmpty()) {
             try {
                 // Tạo file

@@ -32,7 +32,7 @@
               <img class="img-fluid" th:src="@{/image/post/avatar.png}" alt="avatar"/>
             </th:block>
             <th:block th:if="${user.getAvatar()} != null">
-              <img class="img-fluid" src="${user.getAvatar()}" alt="avatar"/>
+              <img class="img-fluid" th:src="@{${pathAvatar}}" alt="avatar"/>
             </th:block>
 
           </div>

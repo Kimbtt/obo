@@ -9,16 +9,17 @@ import java.util.Optional;
 
 @Service
 public interface UserService {
-    public User createUser(CreateUserReq req) throws Exception;
-    public List<User> getListUser();
+    User createUser(CreateUserReq req) throws Exception;
 
-    public Optional<User> getUserById(long id);
+    List<User> getListUser();
 
-    public boolean deleteUser(Long id);
+    Optional<User> getUserById(long id);
 
-     User getUserByEmail(String email);
+    boolean deleteUser(Long id);
 
-     User getCurrentUser();
+    User getUserByEmail(String email);
 
-     User updateUser(User userUpdate);
+    User getCurrentUser();
+
+    User updateUser(User userUpdate);
 }
